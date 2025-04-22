@@ -22,7 +22,6 @@
     </style>
 </head>
 <body class="bg-animated text-white flex items-center justify-center min-h-screen">
-
     <div class="text-center space-y-10 backdrop-blur-sm bg-black/40 p-10 rounded-xl shadow-xl">
         <img src="{{ asset('images/MW-LOGO-WHITE.png') }}" alt="Logo" class="w-32 h-32 mx-auto mb-6">
         <h1 class="text-4xl font-bold">Bienvenido al Sistema de Instrucciones</h1>
@@ -35,7 +34,6 @@
                     Soy Cliente
                 </button>
             </form>
-
             <form method="GET" action="">
                 <input type="hidden" name="role" value="admin">
                 <button type="submit"
@@ -45,6 +43,5 @@
             </form>
         </div>
     </div>
-
 </body>
 </html>
