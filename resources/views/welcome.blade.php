@@ -27,14 +27,14 @@
         <h1 class="text-4xl font-bold">Bienvenido al Sistema de Instrucciones</h1>
 
         <div class="flex flex-col md:flex-row items-center justify-center gap-10">
-            <form method="GET" action="">
+            <form method="GET" action="{{route('client.dashboard')}}">
                 <input type="hidden" name="role" value="client">
                 <button type="submit"
                         class="bg-blue-600 hover:bg-blue-700 text-white text-2xl font-semibold px-10 py-6 rounded-xl shadow-lg transition">
                     Soy Cliente
                 </button>
             </form>
-            <form method="GET" action="">
+            <form method="GET" action="{{route('admin.dashboard')}}">
                 <input type="hidden" name="role" value="admin">
                 <button type="submit"
                         class="bg-green-600 hover:bg-green-700 text-white text-2xl font-semibold px-10 py-6 rounded-xl shadow-lg transition">
