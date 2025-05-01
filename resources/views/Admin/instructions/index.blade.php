@@ -8,6 +8,9 @@
 @endif
 
 <div class="flex justify-between items-center mb-6">
+    <a href="{{route('admin.dashboard')}}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow transition">
+        Inicio
+    </a>
     <h2 class="text-2xl font-bold">Instrucciones de Trabajo</h2>
     <a href="{{ route('admin.instructions.create') }}"
        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow">
