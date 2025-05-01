@@ -1,29 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Digital Signage System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes gradient-x {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
+@extends('layouts.admin')
 
-        .bg-animated {
-            background: linear-gradient(-45deg,rgb(0, 255, 179),rgb(255, 255, 255),rgb(0, 255, 179),rgb(255, 0, 0));
-            background-size: 400% 400%;
-            animation: gradient-x 10s ease infinite;
-        }
-    </style>
-</head>
-<body class="bg-animated text-white flex items-center justify-center min-h-screen">
-    <div class="text-center space-y-10 backdrop-blur-sm bg-black/40 p-10 rounded-xl shadow-xl">
-       <h1>SOY ADMIN</h1>
+@section('title', 'Dashboard de Admin')
+
+@section('content')
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-white/10 p-6 rounded-xl shadow hover:scale-105 transition">
+    <a href="{{ route('admin.lines.index') }}" class="text-white underline">
+        <h2 class="text-xl font-semibold">Líneas</h2>
+    </a>
+        <p class="text-3xl mt-2"></p>
     </div>
-</body>
-</html>
+
+    <div class="bg-white/10 p-6 rounded-xl shadow hover:scale-105 transition">
+    <a href="{{ route('admin.monitors.index') }}" class="text-white underline">
+        <h2 class="text-xl font-semibold">Monitores</h2>
+    </a>
+        <p class="text-3xl mt-2"></p>
+    </div>
+
+    <div class="bg-white/10 p-6 rounded-xl shadow hover:scale-105 transition">
+    <a href="{{ route('admin.models.index') }}" class="text-white underline">
+        <h2 class="text-xl font-semibold">Modelos</h2>
+    </a>
+        <p class="text-3xl mt-2"></p>
+    </div>
+
+    <div class="bg-white/10 p-6 rounded-xl shadow hover:scale-105 transition">
+    <a href="{{ route('admin.instructions.index') }}" class="text-white underline">
+        <h2 class="text-xl font-semibold">Instrucciones</h2>
+    </a>
+        <p class="text-3xl mt-2"></p>
+    </div>
+</div>
+@endsection
