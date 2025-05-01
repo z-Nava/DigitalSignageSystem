@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('line_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->ipAddress('ip_address')->unique();
+            $table->foreignId('product_model_id')->nullable()->constrained('models')->onDelete('set null');
             $table->timestamps();
         });
     }

@@ -1,12 +1,11 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\LineController;
 use App\Http\Controllers\Admin\MonitorController;
 use App\Http\Controllers\Admin\ModelController;
 use App\Http\Controllers\Admin\InstructionController;
-
+use App\Http\Controllers\Monitor\MonitorContentController;
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/admin/dashboard', [HomeController::class, 'dashAdmin'])->name('admin.dashboard');
@@ -43,3 +42,8 @@ Route::post('/instructions', [InstructionController::class, 'store'])->name('adm
 Route::get('/instructions/{instruction}/edit', [InstructionController::class, 'edit'])->name('admin.instructions.edit');
 Route::put('/instructions/{instruction}', [InstructionController::class, 'update'])->name('admin.instructions.update');
 Route::delete('/instructions/{instruction}', [InstructionController::class, 'destroy'])->name('admin.instructions.destroy');
+
+Route::get('/monitors/assign', [MonitorContentController::class, 'assignView'])->name('admin.monitors.assignView');
+Route::post('/monitors/assign', [MonitorContentController::class, 'assign'])->name('admin.monitors.assign');
+
+

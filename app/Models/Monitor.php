@@ -22,5 +22,11 @@ class Monitor extends Model
     {
         return $this->belongsToMany(ProductModel::class, 'model_monitor');
     }
+
+    public function productModel()
+    {
+        return $this->belongsTo(ProductModel::class, 'product_model_id');
+    }
+
 }
     
