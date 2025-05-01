@@ -8,11 +8,15 @@
         Inicio
     </a>
     <h2 class="text-2xl font-bold">Líneas de Producción</h2>
-    <a href="#" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition">
+    <a href="{{route('admin.lines.create')}}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition">
         + Nueva Línea
     </a>
 </div>
-
+@if (session('success'))
+    <div class="mb-4 p-4 rounded-lg bg-green-500 text-white shadow-lg animate-fade-in">
+        {{ session('success') }}
+    </div>
+@endif
 <div class="overflow-x-auto rounded-xl shadow">
     <table class="min-w-full bg-white/10 text-white text-left">
         <thead class="bg-black/40">
@@ -25,30 +29,29 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-white/20">
-            {{-- Ejemplo estático --}}
+            @forelse ($lines as $index => $line)
             <tr class="hover:bg-white/10 transition">
-                <td class="px-6 py-4">1</td>
-                <td class="px-6 py-4">Línea A</td>
-                <td class="px-6 py-4">5</td>
-                <td class="px-6 py-4">3</td>
+                <td class="px-6 py-4">{{ $index + 1 }}</td>
+                <td class="px-6 py-4">{{ $line->name }}</td>
+                <td class="px-6 py-4">{{ $line->monitors()->count() }}</td>
+                <td class="px-6 py-4">{{ $line->models()->count() }}</td>
                 <td class="px-6 py-4 text-right space-x-2">
                     <a href="#" class="text-blue-400 hover:underline">Ver</a>
-                    <a href="#" class="text-yellow-400 hover:underline">Editar</a>
-                    <a href="#" class="text-red-400 hover:underline">Eliminar</a>
+                    <a href="{{route('admin.lines.edit', $line->id)}}" class="text-yellow-400 hover:underline">Editar</a>
+                    <form action="{{ route('admin.lines.destroy', $line->id) }}" method="POST" 
+                    onsubmit="return confirm('¿Estás seguro de eliminar esta línea?')" 
+                    class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-400 hover:underline">Eliminar</button>
+                    </form>
                 </td>
             </tr>
-
+            @empty
             <tr class="hover:bg-white/10 transition">
-                <td class="px-6 py-4">2</td>
-                <td class="px-6 py-4">Línea B</td>
-                <td class="px-6 py-4">2</td>
-                <td class="px-6 py-4">1</td>
-                <td class="px-6 py-4 text-right space-x-2">
-                    <a href="#" class="text-blue-400 hover:underline">Ver</a>
-                    <a href="#" class="text-yellow-400 hover:underline">Editar</a>
-                    <a href="#" class="text-red-400 hover:underline">Eliminar</a>
-                </td>
+                <td class="px-6 py-4">No hay lineas registradas aun.</td>
             </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
