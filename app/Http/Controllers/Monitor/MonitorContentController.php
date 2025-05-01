@@ -30,26 +30,23 @@ class MonitorContentController extends Controller
 
     public function assign(Request $request)
     {
-        // Validación
         $request->validate([
-            'monitor_id' => 'required|exists:monitors,id',  // Asegúrate de que el monitor exista
-            'product_model_id' => 'required|exists:models,id',  // Asegúrate de que el modelo exista
+            'monitor_id' => 'required|exists:monitors,id',
+            'product_model_id' => 'required|exists:models,id',
             'work_instructions' => 'required|array',
-            'work_instructions.*' => 'exists:work_instructions,id',  // Asegúrate de que las instrucciones existan
+            'work_instructions.*' => 'exists:work_instructions,id',
         ]);
 
-        // Obtener el monitor seleccionado
-        $monitor = Monitor::findOrFail($request->monitor_id);  // Obtener el monitor por su ID
-
-        // Asignar el modelo al monitor
-        $monitor->productModel()->associate($request->product_model_id);
-        $monitor->save();
-
-        // Asignar las instrucciones al monitor
-        $monitor->workInstructions()->sync($request->work_instructions);
+        // Delegamos la lógica al servicio
+        $this->monitorContentService->assignContent(
+            $request->monitor_id,
+            $request->product_model_id,
+            $request->work_instructions
+        );
 
         return redirect()->route('admin.monitors.index')->with('success', 'Modelo e instrucciones asignadas correctamente.');
     }
+
 
 
 }

@@ -5,13 +5,15 @@ use App\Models\Monitor;
 
 class MonitorContentService
 {
-    // Asignar modelo e instrucciones a un monitor
-    public function assignModelAndInstructions(Monitor $monitor, $modelId, $workInstructionsIds)
+    public function assignContent($monitorId, $productModelId, array $instructionIds)
     {
-        // Asignar el modelo al monitor
-        $monitor->models()->sync([$modelId]);
+        $monitor = Monitor::findOrFail($monitorId);
 
-        // Asignar las instrucciones al monitor
-        $monitor->workInstructions()->sync($workInstructionsIds);
+        // Asociar modelo
+        $monitor->productModel()->associate($productModelId);
+        $monitor->save();
+
+        // Asociar instrucciones
+        $monitor->workInstructions()->sync($instructionIds);
     }
 }
