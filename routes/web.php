@@ -28,9 +28,15 @@ Route::get('/monitors/{monitor}/edit', [MonitorController::class, 'edit'])->name
 Route::put('/monitors/{monitor}', [MonitorController::class, 'update'])->name('admin.monitors.update');
 Route::delete('/monitors/{monitor}', [MonitorController::class, 'destroy'])->name('admin.monitors.destroy');
 
-
-
-
+//ROUTES FOR MODELS - ADMIN
 Route::get('/models', [ModelController::class, 'index'])->name('admin.models.index');
+Route::get('/models/create', [ModelController::class, 'create'])->name('admin.models.create');
+Route::post('/models', [ModelController::class, 'store'])->name('admin.models.store');
+Route::get('/models/{model}/edit', [ModelController::class, 'edit'])->name('admin.models.edit');
+Route::put('/models/{model}', [ModelController::class, 'update'])->name('admin.models.update');
+Route::delete('/models/{model}', [ModelController::class, 'destroy'])->name('admin.models.destroy');
+
+
+
 Route::get('/instructions', [InstructionController::class, 'index'])->name('admin.instructions.index');
 
