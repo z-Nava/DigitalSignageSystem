@@ -36,7 +36,10 @@ Route::get('/models/{model}/edit', [ModelController::class, 'edit'])->name('admi
 Route::put('/models/{model}', [ModelController::class, 'update'])->name('admin.models.update');
 Route::delete('/models/{model}', [ModelController::class, 'destroy'])->name('admin.models.destroy');
 
-
-
+//ROUTES FOR INSTRUCTIONS - ADMIN
 Route::get('/instructions', [InstructionController::class, 'index'])->name('admin.instructions.index');
-
+Route::get('/instructions/create', [InstructionController::class, 'create'])->name('admin.instructions.create');
+Route::post('/instructions', [InstructionController::class, 'store'])->name('admin.instructions.store');
+Route::get('/instructions/{instruction}/edit', [InstructionController::class, 'edit'])->name('admin.instructions.edit');
+Route::put('/instructions/{instruction}', [InstructionController::class, 'update'])->name('admin.instructions.update');
+Route::delete('/instructions/{instruction}', [InstructionController::class, 'destroy'])->name('admin.instructions.destroy');

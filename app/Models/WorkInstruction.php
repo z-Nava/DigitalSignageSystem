@@ -10,7 +10,7 @@ class WorkInstruction extends Model
 
     public function model()
     {
-        return $this->belongsTo(ProductModel::class);
+        return $this->belongsTo(ProductModel::class, 'model_id');
     }
 
     public function monitors()
