@@ -18,4 +18,10 @@ class ProductModel extends Model
     {
         return $this->hasMany(WorkInstruction::class);
     }
+
+    public function monitors()
+    {
+        return $this->belongsToMany(Monitor::class, 'model_monitor');
+    }
+
 }

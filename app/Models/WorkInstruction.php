@@ -15,6 +15,6 @@ class WorkInstruction extends Model
 
     public function monitors()
     {
-        return $this->belongsToMany(Monitor::class)->withTimestamps();
+        return $this->belongsToMany(Monitor::class, 'model_monitor')->withTimestamps();
     }
 }
