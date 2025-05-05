@@ -7,9 +7,12 @@ use App\Http\Controllers\Admin\ModelController;
 use App\Http\Controllers\Admin\InstructionController;
 use App\Http\Controllers\Monitor\MonitorContentController;
 
+
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/admin/dashboard', [HomeController::class, 'dashAdmin'])->name('admin.dashboard');
 Route::get('/client/dashboard', [HomeController::class, 'dashClient'])->name('client.dashboard');
+Route::get('/client/display', [HomeController::class, 'showMonitorContent'])->name('client.display');
+
 
 //ROUTES FOR LINES - ADMIN
 Route::get('/lines', [LineController::class, 'index'])->name('admin.lines.index');

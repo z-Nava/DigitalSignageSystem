@@ -16,7 +16,7 @@ class ProductModel extends Model
 
     public function workInstructions()
     {
-        return $this->hasMany(WorkInstruction::class);
+        return $this->hasMany(WorkInstruction::class, 'model_id');
     }
 
     public function monitors()
