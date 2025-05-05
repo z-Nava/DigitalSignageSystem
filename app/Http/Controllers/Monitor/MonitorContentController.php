@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Monitor;
 use App\Models\ProductModel;
 use App\Models\WorkInstruction;
+use App\Models\Line;
 use App\Services\Monitor\MonitorContentService;
 
 class MonitorContentController extends Controller
@@ -17,15 +18,14 @@ class MonitorContentController extends Controller
     {
         $this->monitorContentService = $monitorContentService;
     }
-
-    // Vista para asignar modelo e instrucciones a un monitor
     public function assignView()
     {
-        $monitors = Monitor::all();  // Obtener todos los monitores
-        $models = ProductModel::all();  // Obtener todos los modelos
-        $workInstructions = WorkInstruction::all();  // Obtener todas las instrucciones
+        $monitors = Monitor::all();
+        $models = ProductModel::all();  
+        $workInstructions = WorkInstruction::all();  
+        $lines = Line::with('monitors.productModel', 'monitors.workInstructions')->get();
     
-        return view('admin.monitors.assign', compact('monitors', 'models', 'workInstructions'));
+        return view('admin.monitors.assign', compact('monitors', 'models', 'workInstructions', 'lines'));
     }
 
     public function assign(Request $request)
@@ -44,7 +44,7 @@ class MonitorContentController extends Controller
             $request->work_instructions
         );
 
-        return redirect()->route('admin.monitors.index')->with('success', 'Modelo e instrucciones asignadas correctamente.');
+        return redirect()->route('admin.monitors.assign')->with('success', 'Modelo e instrucciones asignadas correctamente.');
     }
 
     public function showMonitorContent(Request $request)

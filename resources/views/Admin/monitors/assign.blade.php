@@ -49,5 +49,51 @@
             </button>
         </div>
     </form>
+    {{-- Tabla de asignaciones por línea --}}
+<div class="mt-16">
+    <h2 class="text-2xl font-bold mb-6">Asignaciones Actuales por Línea</h2>
+
+    @foreach ($lines as $line)
+        <div class="mb-10 bg-white/5 p-6 rounded-xl shadow">
+            <h3 class="text-xl font-semibold text-red-400 mb-4">Línea: {{ $line->name }}</h3>
+
+            @if ($line->monitors->count() > 0)
+                <table class="min-w-full text-white bg-white/10 rounded overflow-hidden">
+                    <thead class="bg-black/40">
+                        <tr>
+                            <th class="px-4 py-2">Monitor</th>
+                            <th class="px-4 py-2">Modelo Asignado</th>
+                            <th class="px-4 py-2">Instrucciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/10">
+                        @foreach ($line->monitors as $monitor)
+                            <tr class="hover:bg-white/10 transition">
+                                <td class="px-4 py-3 font-medium">{{ $monitor->name }}</td>
+                                <td class="px-4 py-3">
+                                    {{ $monitor->productModel->name ?? '—' }}
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @if ($monitor->workInstructions->count() > 0)
+                                        <ul class="list-disc list-inside">
+                                            @foreach ($monitor->workInstructions as $instruction)
+                                                <li>{{ $instruction->title }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <span class="text-gray-300 italic">Sin instrucciones</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <p class="text-gray-400 italic">No hay monitores asignados a esta línea.</p>
+            @endif
+        </div>
+    @endforeach
+</div>
+
 </div>
 @endsection
