@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Monitor extends Model
 {
-    protected $fillable = ['line_id', 'name', 'ip_address'];
+    protected $fillable = ['line_id', 'name', 'ip_address', 'token'];
 
     public function line()
     {

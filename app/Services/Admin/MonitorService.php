@@ -2,6 +2,7 @@
 namespace App\Services\Admin;
 
 use App\Models\Monitor;
+use Illuminate\Support\Str;
 
 class MonitorService
 {
@@ -12,6 +13,7 @@ class MonitorService
 
     public function store(array $data)
     {
+        $data['token'] = Str::random(40);
         return Monitor::create($data);
     }
 
