@@ -26,7 +26,30 @@
         <h1 class="text-4xl font-extrabold text-center mb-12 drop-shadow-lg">
             Contenido Disponible por Línea
         </h1>
+        <form method="GET" action="{{ route('client.dashboard') }}" class="mb-12 flex flex-col md:flex-row gap-4 items-center justify-center">
+            <input type="text" name="name" placeholder="Buscar línea por nombre"
+                value="{{ request('name') }}"
+                class="px-4 py-2 rounded-lg text-black w-full md:w-1/3" />
 
+            <select name="type" class="px-4 py-2 rounded-lg text-black w-full md:w-1/4">
+                <option value="">Todos los tipos</option>
+                @foreach ($types as $type)
+                    <option value="{{ $type }}" {{ request('type') === $type ? 'selected' : '' }}>
+                        {{ $type }}
+                    </option>
+                @endforeach
+            </select>
+            <button type="submit"
+                    class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition">
+                Filtrar
+            </button>
+            <a href="{{ route('client.dashboard') }}" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-5 py-2 rounded-lg shadow">
+                Mostrar todo
+            </a>
+            <a href="{{ route('welcome') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg shadow">
+            Inicio
+            </a>
+        </form>
         @foreach($lines as $line)
             <div class="mb-12 border-l-4 border-red-500 pl-6 bg-black/40 p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-semibold text-white mb-4">

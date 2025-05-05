@@ -18,14 +18,24 @@ class HomeController extends Controller
         return view('admin.dashboard');
     }
 
-    public function dashClient()
+    public function dashClient(Request $request)
     {
-        $lines = Line::with([
+        $query = Line::with([
             'models.workInstructions',
-            'models.monitors' // ← relación inversa, monitores por modelo
-        ])->get();
-        return view('client.dashboard', compact('lines'));
-    }
+            'models.monitors'
+        ]);
 
-    
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        $lines = $query->orderBy('type')->orderBy('name')->get();
+        $types = Line::select('type')->distinct()->pluck('type');
+
+        return view('client.dashboard', compact('lines', 'types'));
+    }      
 }
