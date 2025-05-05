@@ -19,8 +19,8 @@ class InstructionController extends Controller
 
     public function index()
     {
-        $instructions = $this->instructionService->getAll();
-        return view('admin.instructions.index', compact('instructions'));
+        $lines = $this->instructionService->getAll();
+        return view('admin.instructions.index', compact('lines'));
     }
 
     public function create(Request $request)

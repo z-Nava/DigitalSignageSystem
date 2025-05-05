@@ -2,12 +2,13 @@
 namespace App\Services\Admin;
 
 use App\Models\WorkInstruction;
+use App\Models\Line;
 
 class InstructionService
 {
     public function getAll()
     {
-        return WorkInstruction::with('model.line')->get();
+        return Line::with('models.workInstructions')->get();
     }
 
     public function store(array $data)
