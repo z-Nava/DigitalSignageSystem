@@ -24,7 +24,7 @@ class MonitorController extends Controller
 
     public function create()
     {
-        $lines = Line::all();
+        $lines = Line::orderBy('type')->orderBy('name')->get()->groupBy('type');
         return view('admin.monitors.create', compact('lines'));
     }
 
@@ -43,7 +43,7 @@ class MonitorController extends Controller
 
         public function edit(Monitor $monitor)
     {
-        $lines = \App\Models\Line::all();
+        $lines = Line::orderBy('type')->orderBy('name')->get()->groupBy('type');
         return view('admin.monitors.edit', compact('monitor', 'lines'));
     }
 

@@ -24,7 +24,7 @@ class ModelController extends Controller
 
     public function create()
     {
-        $lines = Line::all();
+        $lines = Line::orderBy('type')->orderBy('name')->get()->groupBy('type');
         return view('admin.models.create', compact('lines'));
     }
 
@@ -42,7 +42,7 @@ class ModelController extends Controller
 
     public function edit(ProductModel $model)
     {
-        $lines = Line::all();
+        $lines = Line::orderBy('type')->orderBy('name')->get()->groupBy('type');
         return view('admin.models.edit', compact('model', 'lines'));
     }
 

@@ -48,7 +48,7 @@ class LineController extends Controller
     public function update(Request $request, Line $line)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:lines,name,' . $line->id, // Evita duplicados
+            'name' => 'required|string|max:255|unique:lines,name,' . $line->id,
             'type' => 'required|string'
         ]);
 

@@ -23,10 +23,13 @@
         <div class="mb-4">
             <label class="block mb-2 font-semibold">Línea de Producción:</label>
             <select name="line_id" class="w-full rounded p-2 text-black" required>
-                @foreach ($lines as $line)
-                    <option value="{{ $line->id }}" {{ $monitor->line_id == $line->id ? 'selected' : '' }}>
-                        {{ $line->name }}
-                    </option>
+                <option value="">Seleccionar línea</option>
+                @foreach ($lines as $type => $groupedLines)
+                    <optgroup label="{{ $type }}">
+                        @foreach ($groupedLines as $line)
+                            <option value="{{ $line->id }}">{{ $line->name }}</option>
+                        @endforeach
+                    </optgroup>
                 @endforeach
             </select>
         </div>
