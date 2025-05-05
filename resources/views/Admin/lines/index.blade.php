@@ -22,6 +22,7 @@
         <thead class="bg-black/40">
             <tr>
                 <th class="px-6 py-3">#</th>
+                <th class="px-6 py-3">Tipo</th>
                 <th class="px-6 py-3">Nombre</th>
                 <th class="px-6 py-3">Monitores</th>
                 <th class="px-6 py-3">Modelos</th>
@@ -32,6 +33,7 @@
             @forelse ($lines as $index => $line)
             <tr class="hover:bg-white/10 transition">
                 <td class="px-6 py-4">{{ $index + 1 }}</td>
+                <td class="px-6 py-4">{{ $line->type }}</td>
                 <td class="px-6 py-4">{{ $line->name }}</td>
                 <td class="px-6 py-4">{{ $line->monitors()->count() }}</td>
                 <td class="px-6 py-4">{{ $line->models()->count() }}</td>
