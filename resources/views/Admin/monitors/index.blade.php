@@ -8,52 +8,49 @@
 @endif
 
 <div class="flex justify-between items-center mb-6">
-    <a href="{{route('admin.dashboard')}}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow transition">
+    <a href="{{ route('admin.dashboard') }}"
+       class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow transition">
         Inicio
     </a>
-    <h2 class="text-2xl font-bold">Monitores</h2>
+    <h2 class="text-2xl font-bold">Monitores por Línea</h2>
     <a href="{{ route('admin.monitors.create') }}"
        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow">
         + Nuevo Monitor
     </a>
 </div>
 
-<div class="overflow-x-auto rounded-xl shadow">
-    <table class="min-w-full bg-white/10 text-white text-left">
-        <thead class="bg-black/40">
-            <tr>
-                <th class="px-6 py-3">#</th>
-                <th class="px-6 py-3">Nombre</th>
-                <th class="px-6 py-3">IP</th>
-                <th class="px-6 py-3">Línea</th>
-                <th class="px-6 py-3 text-right">Acciones</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-white/20">
-            @forelse ($monitors as $index => $monitor)
-                <tr class="hover:bg-white/10 transition">
-                    <td class="px-6 py-4">{{ $index + 1 }}</td>
-                    <td class="px-6 py-4">{{ $monitor->name }}</td>
-                    <td class="px-6 py-4">{{ $monitor->ip_address }}</td>
-                    <td class="px-6 py-4">{{ $monitor->line->name ?? '—' }}</td>
-                    <td class="px-6 py-4 text-right space-x-2">
-                    <a href="{{ route('admin.monitors.edit', $monitor->id) }}"
-                    class="text-yellow-400 hover:underline">Editar</a>
-                    <form action="{{ route('admin.monitors.destroy', $monitor->id) }}" method="POST" 
-                    onsubmit="return confirm('¿Estás seguro de eliminar este monitor?')"   
-                    class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-400 hover:underline">Eliminar</button>
-                    </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="5" class="px-6 py-4 text-center text-gray-300">No hay monitores registrados.</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
+@php
+    $monitorsByLine = $monitors->groupBy(fn($m) => $m->line->name ?? 'Sin línea');
+@endphp
+
+@foreach ($monitorsByLine as $lineName => $lineMonitors)
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-4 border-b border-white/20 pb-1">{{ $lineName }}</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            @foreach ($lineMonitors as $monitor)
+                <div class="bg-white/10 p-4 rounded-xl shadow-lg backdrop-blur-sm border border-white/10">
+                    <h4 class="text-lg font-bold mb-2">{{ $monitor->name }}</h4>
+                    <p class="text-sm text-gray-300">IP: <span class="font-mono">{{ $monitor->ip_address }}</span></p>
+                    <p class="text-sm text-gray-300">Modelo: 
+                        <span class="font-semibold text-white">
+                            {{ $monitor->productModel->name ?? 'No asignado' }}
+                        </span>
+                    </p>
+                    <div class="mt-4 flex justify-between text-sm">
+                        <a href="{{ route('admin.monitors.edit', $monitor->id) }}"
+                           class="text-yellow-400 hover:underline">Editar</a>
+
+                        <form action="{{ route('admin.monitors.destroy', $monitor->id) }}"
+                              method="POST"
+                              onsubmit="return confirm('¿Estás seguro de eliminar este monitor?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-400 hover:underline">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endforeach
 @endsection
