@@ -23,9 +23,14 @@
 </head>
 <body class="bg-animated text-white flex items-center justify-center min-h-screen">
     <div class="text-center space-y-10 backdrop-blur-sm bg-black/40 p-10 rounded-xl shadow-xl">
+    <div class="flex justify-end mb-4">
+            <button onclick="toggleFullScreen()"
+                    class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded shadow">
+                Pantalla Completa
+            </button>
+        </div>
         <img src="{{ asset('images/MW-LOGO-WHITE.png') }}" alt="Logo" class="w-32 h-32 mx-auto mb-6">
         <h1 class="text-4xl font-bold">Bienvenido al Sistema de Instrucciones</h1>
-
         <div class="flex flex-col md:flex-row items-center justify-center gap-10">
             <form method="GET" action="{{route('client.dashboard')}}">
                 <input type="hidden" name="role" value="client">
@@ -44,4 +49,27 @@
         </div>
     </div>
 </body>
+<script>
+    function toggleFullScreen() {
+        const docElm = document.documentElement;
+        if (!document.fullscreenElement) {
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            } else if (docElm.webkitRequestFullscreen) { /* Safari */
+                docElm.webkitRequestFullscreen();
+            } else if (docElm.msRequestFullscreen) { /* IE11 */
+                docElm.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    }
+</script>
+
 </html>
