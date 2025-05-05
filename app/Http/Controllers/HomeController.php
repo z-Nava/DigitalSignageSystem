@@ -27,17 +27,5 @@ class HomeController extends Controller
         return view('client.dashboard', compact('lines'));
     }
 
-    public function showMonitorContent(Request $request)
-    {
-        $token = $request->get('token');
-        $monitor = Monitor::where('token', $token)->first();
-
-        if (!$monitor || !$monitor->productModel) {
-            return response()->view('client.no_content', [], 404);
-        }
-
-        $instructions = $monitor->productModel->workInstructions;
-
-        return view('client.display', compact('monitor', 'instructions'));
-    }
+    
 }

@@ -16,4 +16,11 @@ class MonitorContentService
         // Asociar instrucciones
         $monitor->workInstructions()->sync($instructionIds);
     }
+
+    public function getMonitorWithInstructionsByToken(string $token): ?Monitor
+    {
+        return Monitor::with(['productModel.workInstructions'])
+            ->where('token', $token)
+            ->first();
+    }
 }

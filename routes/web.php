@@ -11,7 +11,7 @@ use App\Http\Controllers\Monitor\MonitorContentController;
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/admin/dashboard', [HomeController::class, 'dashAdmin'])->name('admin.dashboard');
 Route::get('/client/dashboard', [HomeController::class, 'dashClient'])->name('client.dashboard');
-Route::get('/client/display', [HomeController::class, 'showMonitorContent'])->name('client.display');
+
 
 
 //ROUTES FOR LINES - ADMIN
@@ -48,5 +48,5 @@ Route::delete('/instructions/{instruction}', [InstructionController::class, 'des
 
 Route::get('/monitors/assign', [MonitorContentController::class, 'assignView'])->name('admin.monitors.assignView');
 Route::post('/monitors/assign', [MonitorContentController::class, 'assign'])->name('admin.monitors.assign');
-
+Route::get('/client/display', [MonitorContentController::class, 'showMonitorContent'])->name('client.display');
 
