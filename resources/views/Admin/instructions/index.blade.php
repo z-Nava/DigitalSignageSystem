@@ -39,7 +39,7 @@
                     <td class="px-6 py-4">{{ $instruction->model->line->name ?? '—' }}</td>
                     <td class="px-6 py-4">
                         @if ($instruction->file_path)
-                            <a href="{{ asset($instruction->file_path) }}" target="_blank" class="text-cyan-300 hover:underline">Ver archivo</a>
+                        <a href="{{ asset('storage/' . $instruction->file_path) }}" target="_blank" class="text-blue-400 underline">Ver archivo</a>
                         @else
                             <span class="text-gray-400">—</span>
                         @endif
