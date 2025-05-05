@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\WorkInstruction;
 use App\Models\ProductModel;
 use App\Services\Admin\InstructionService;
+use Illuminate\Support\Facades\Storage;
 
 class InstructionController extends Controller
 {
@@ -35,10 +36,16 @@ class InstructionController extends Controller
             'model_id' => 'required|exists:models,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'file_path' => 'nullable|string|max:255' // Más adelante puedes manejar archivos reales
+            'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480' // Más adelante puedes manejar archivos reales
         ]);
 
-        $this->instructionService->store($request->only('model_id', 'title', 'description', 'file_path'));
+        $data = $request->only('model_id', 'title', 'description');
+
+        if ($request->hasFile('file_path')) {
+            $data['file_path'] = $request->file('file_path')->store('instructions', 'public');
+        }
+
+        $this->instructionService->store($data);
 
         return redirect()->route('admin.instructions.index')->with('success', 'Instrucción creada correctamente.');
     }
@@ -55,10 +62,21 @@ class InstructionController extends Controller
             'model_id' => 'required|exists:models,id',
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'file_path' => 'nullable|string|max:255'
+            'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480'
         ]);
 
-        $this->instructionService->update($instruction, $request->only('model_id', 'title', 'description', 'file_path'));
+        $data = $request->only('model_id', 'title', 'description');
+
+        if ($request->hasFile('file_path')) {
+            // Eliminar archivo anterior si existe
+            if ($instruction->file_path && Storage::disk('public')->exists($instruction->file_path)) {
+                Storage::disk('public')->delete($instruction->file_path);
+            }
+
+            $data['file_path'] = $request->file('file_path')->store('instructions', 'public');
+        }
+
+        $this->instructionService->update($instruction, $data);
 
         return redirect()->route('admin.instructions.index')->with('success', 'Instrucción actualizada correctamente.');
     }

@@ -6,7 +6,7 @@
 <div class="max-w-xl mx-auto bg-white/10 p-8 rounded-xl shadow">
     <h2 class="text-2xl font-bold mb-6">Crear Instrucción de Trabajo</h2>
 
-    <form action="{{ route('admin.instructions.store') }}" method="POST">
+    <form action="{{ route('admin.instructions.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         {{-- Modelo --}}
@@ -36,8 +36,10 @@
 
         {{-- Archivo (simulado por ahora con texto) --}}
         <div class="mb-4">
-            <label for="file_path" class="block mb-2 font-semibold">Ruta del archivo (simulada):</label>
-            <input type="text" name="file_path" id="file_path" class="w-full rounded p-2 text-black" placeholder="ej: storage/instructions/doc.pdf" value="{{ old('file_path') }}">
+            <label for="file_path" class="block mb-2 font-semibold">Archivo (PDF o Imagen):</label>
+            <input type="file" name="file_path" id="file_path"
+                class="w-full rounded p-2 text-white bg-black border border-white/20 file:bg-red-600 file:border-none file:py-2 file:px-4 file:rounded file:text-white"
+                accept=".pdf,.jpg,.jpeg,.png">
         </div>
 
         {{-- Botones --}}

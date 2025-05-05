@@ -6,7 +6,7 @@
 <div class="max-w-xl mx-auto bg-white/10 p-8 rounded-xl shadow">
     <h2 class="text-2xl font-bold mb-6">Editar Instrucción</h2>
 
-    <form action="{{ route('admin.instructions.update', $instruction->id) }}" method="POST">
+    <form action="{{ route('admin.instructions.update', $instruction->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -35,10 +35,22 @@
             <textarea name="description" id="description" class="w-full rounded p-2 text-black" rows="4">{{ old('description', $instruction->description) }}</textarea>
         </div>
 
-        {{-- Ruta de archivo --}}
+            {{-- Archivo actual (si existe) --}}
+        @if($instruction->file_path)
+            <div class="mb-4">
+                <label class="block mb-2 font-semibold">Archivo actual:</label>
+                <a href="{{ asset('storage/' . $instruction->file_path) }}" target="_blank" class="text-blue-400 underline">
+                    Ver archivo actual
+                </a>
+            </div>
+        @endif
+
+        {{-- Subir nuevo archivo --}}
         <div class="mb-4">
-            <label for="file_path" class="block mb-2 font-semibold">Ruta del archivo:</label>
-            <input type="text" name="file_path" id="file_path" class="w-full rounded p-2 text-black" value="{{ old('file_path', $instruction->file_path) }}">
+            <label for="file_path" class="block mb-2 font-semibold">Reemplazar archivo (opcional):</label>
+            <input type="file" name="file_path" id="file_path"
+                class="w-full rounded p-2 text-white bg-black border border-white/20 file:bg-red-600 file:border-none file:py-2 file:px-4 file:rounded file:text-white"
+                accept=".pdf,.jpg,.jpeg,.png">
         </div>
 
         {{-- Botones --}}
