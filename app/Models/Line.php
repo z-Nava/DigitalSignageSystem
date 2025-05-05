@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Line extends Model
 {
-    protected $fillable = ['name'];
-
+    protected $fillable = ['name', 'type'];
+    
     public function monitors()
     {
         return $this->hasMany(Monitor::class);

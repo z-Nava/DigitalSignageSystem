@@ -32,9 +32,10 @@ class LineController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'type' => 'required|string'
         ]);
 
-        $this->lineService->store($request->only('name'));
+        $this->lineService->store($request->only('name', 'type'));
 
         return redirect()->route('admin.lines.index')->with('success', 'Línea creada correctamente.');
     }
@@ -48,9 +49,10 @@ class LineController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:lines,name,' . $line->id, // Evita duplicados
+            'type' => 'required|string'
         ]);
 
-        $this->lineService->update($line, $request->only('name'));
+        $this->lineService->update($line, $request->only('name', 'type'));
 
         return redirect()->route('admin.lines.index')->with('success', 'Línea actualizada correctamente.');
     }

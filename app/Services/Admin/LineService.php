@@ -14,6 +14,7 @@ class LineService
     {
         return Line::create([
             'name' => $data['name'],
+            'type' => $data['type'] ?? 'general', // Default type is 'general'
         ]);
     }
 
@@ -21,6 +22,7 @@ class LineService
     {
         $line->update([
             'name' => $data['name'],
+            'type' => $data['type'] ?? $line->type, // Keep the current type if not provided
         ]);
         return $line;
     }
