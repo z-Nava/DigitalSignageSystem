@@ -53,10 +53,6 @@ class MonitorContentController extends Controller
 
         $monitor = $this->monitorContentService->getMonitorWithInstructionsByToken($token);
 
-        if (!$monitor || !$monitor->productModel) {
-            return response()->view('client.no_content', [], 404);
-        }
-
         $instructions = $monitor->productModel->workInstructions;
 
         return view('client.display', compact('monitor', 'instructions'));
