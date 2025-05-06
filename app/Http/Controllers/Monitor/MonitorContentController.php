@@ -19,13 +19,17 @@ class MonitorContentController extends Controller
     {
         $this->monitorContentService = $monitorContentService;
     }
+
     public function assignView()
     {
-        $monitors = Monitor::all();
-        $models = ProductModel::all();  
-        $workInstructions = WorkInstruction::all();  
-        $lines = Line::with('monitors.productModel', 'monitors.workInstructions')->get();
-    
+        $monitors = Monitor::with(['line', 'productModel', 'workInstructions'])->get();
+        $models = ProductModel::with('line')->get();
+        $workInstructions = WorkInstruction::with('model')->get();
+        $lines = Line::with([
+            'monitors.productModel',
+            'monitors.workInstructions'
+        ])->orderBy('type')->orderBy('name')->get();
+
         return view('admin.monitors.assign', compact('monitors', 'models', 'workInstructions', 'lines'));
     }
 
