@@ -16,10 +16,10 @@ class ProductModelSeeder extends Seeder
     {
         foreach (Line::all() as $line) {
             $prefix = match ($line->type) {
-                'Baterias' => 'MXB',
-                'Consolas' => 'MXC',
-                'Motores'  => 'MXM',
-                'MXFuel'   => 'MXF',
+                'Baterias' => 'HO 6.0 Ah',
+                'Consolas' => 'M12 Fuel Drill ',
+                'Motores'  => 'MR BRUSHLESS',
+                'MXFuel'   => 'MX FUEL Breaker KIR',
                 default    => 'GEN',
             };
 

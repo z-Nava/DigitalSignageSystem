@@ -10,11 +10,12 @@ class LineSeeder extends Seeder
     public function run(): void
     {
         $types = ['Baterias', 'Motores', 'MXFuel', 'Consolas'];
+        $nomenclatures = ['MXC', 'MXB', 'MXM', 'MXF'];
 
         foreach ($types as $type) {
-            for ($i = 1; $i <= 2; $i++) {
+            foreach ($nomenclatures as $nomenclature) {
                 Line::create([
-                    'name' => $type . ' ' . $i,
+                    'name' => $nomenclature . '0' . random_int(1, 100),
                     'type' => $type,
                 ]);
             }
