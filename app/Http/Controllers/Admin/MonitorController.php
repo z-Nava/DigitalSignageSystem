@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Monitor;
 use App\Models\Line;
 use App\Services\Admin\MonitorService;
+use App\Http\Requests\StoreMonitorRequest;
+use App\Http\Requests\UpdateMonitorRequest;
 
 class MonitorController extends Controller
 {
@@ -30,12 +32,6 @@ class MonitorController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'ip_address' => 'required|ip',
-            'line_id' => 'required|exists:lines,id'
-        ]);
-
         $this->monitorService->store($request->only('name', 'ip_address', 'line_id'));
 
         return redirect()->route('admin.monitors.index')->with('success', 'Monitor creado correctamente.');
@@ -49,12 +45,6 @@ class MonitorController extends Controller
 
     public function update(Request $request, Monitor $monitor)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'ip_address' => 'required|ip',
-            'line_id' => 'required|exists:lines,id'
-        ]);
-
         $this->monitorService->update($monitor, $request->only('name', 'ip_address', 'line_id'));
 
         return redirect()->route('admin.monitors.index')->with('success', 'Monitor actualizado correctamente.');
