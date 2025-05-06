@@ -30,7 +30,7 @@ class MonitorController extends Controller
         return view('admin.monitors.create', compact('lines'));
     }
 
-    public function store(Request $request)
+    public function store(StoreMonitorRequest $request)
     {
         $this->monitorService->store($request->only('name', 'ip_address', 'line_id'));
 
@@ -43,7 +43,7 @@ class MonitorController extends Controller
         return view('admin.monitors.edit', compact('monitor', 'lines'));
     }
 
-    public function update(Request $request, Monitor $monitor)
+    public function update(UpdateMonitorRequest $request, Monitor $monitor)
     {
         $this->monitorService->update($monitor, $request->only('name', 'ip_address', 'line_id'));
 
