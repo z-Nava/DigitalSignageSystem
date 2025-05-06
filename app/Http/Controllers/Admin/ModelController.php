@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreModelRequest;
+use App\Http\Requests\UpdateModelRequest;
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
 use App\Models\Line;
@@ -28,13 +30,8 @@ class ModelController extends Controller
         return view('admin.models.create', compact('lines'));
     }
 
-    public function store(Request $request)
+    public function store(StoreModelRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'line_id' => 'required|exists:lines,id',
-        ]);
-
         $this->modelService->store($request->only('name', 'line_id'));
 
         return redirect()->route('admin.models.index')->with('success', 'Modelo creado correctamente.');
@@ -46,13 +43,8 @@ class ModelController extends Controller
         return view('admin.models.edit', compact('model', 'lines'));
     }
 
-    public function update(Request $request, ProductModel $model)
+    public function update(UpdateModelRequest $request, ProductModel $model)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'line_id' => 'required|exists:lines,id',
-        ]);
-
         $this->modelService->update($model, $request->only('name', 'line_id'));
 
         return redirect()->route('admin.models.index')->with('success', 'Modelo actualizado correctamente.');
