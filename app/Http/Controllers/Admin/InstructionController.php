@@ -7,6 +7,9 @@ use App\Models\WorkInstruction;
 use App\Models\ProductModel;
 use App\Services\Admin\InstructionService;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreWorkInstructionRequest;
+use App\Http\Requests\UpdateWorkInstructionRequest;
+use Spatie\LaravelIgnition\Http\Requests\UpdateConfigRequest;
 
 class InstructionController extends Controller
 {
@@ -30,15 +33,8 @@ class InstructionController extends Controller
         return view('admin.instructions.create', compact('models', 'preselectedModelId'));
     }
 
-    public function store(Request $request)
+    public function store(StoreWorkInstructionRequest $request)
     {
-        $request->validate([
-            'model_id' => 'required|exists:models,id',
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480' // Más adelante puedes manejar archivos reales
-        ]);
-
         $data = $request->only('model_id', 'title', 'description');
 
         if ($request->hasFile('file_path')) {
@@ -56,19 +52,11 @@ class InstructionController extends Controller
         return view('admin.instructions.edit', compact('instruction', 'models'));
     }
 
-    public function update(Request $request, WorkInstruction $instruction)
+    public function update(UpdateWorkInstructionRequest $request, WorkInstruction $instruction)
     {
-        $request->validate([
-            'model_id' => 'required|exists:models,id',
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480'
-        ]);
-
         $data = $request->only('model_id', 'title', 'description');
 
         if ($request->hasFile('file_path')) {
-            // Eliminar archivo anterior si existe
             if ($instruction->file_path && Storage::disk('public')->exists($instruction->file_path)) {
                 Storage::disk('public')->delete($instruction->file_path);
             }
