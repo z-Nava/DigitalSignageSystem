@@ -9,6 +9,7 @@ use App\Models\ProductModel;
 use App\Models\WorkInstruction;
 use App\Models\Line;
 use App\Services\Monitor\MonitorContentService;
+use App\Http\Requests\AssignMonitorContentRequest;
 
 class MonitorContentController extends Controller
 {
@@ -28,20 +29,14 @@ class MonitorContentController extends Controller
         return view('admin.monitors.assign', compact('monitors', 'models', 'workInstructions', 'lines'));
     }
 
-    public function assign(Request $request)
+    public function assign(AssignMonitorContentRequest $request)
     {
-        $request->validate([
-            'monitor_id' => 'required|exists:monitors,id',
-            'product_model_id' => 'required|exists:models,id',
-            'work_instructions' => 'required|array',
-            'work_instructions.*' => 'exists:work_instructions,id',
-        ]);
+        $validated = $request->validated();
 
-        // Delegamos la lógica al servicio
         $this->monitorContentService->assignContent(
-            $request->monitor_id,
-            $request->product_model_id,
-            $request->work_instructions
+            $validated['monitor_id'],
+            $validated['product_model_id'],
+            $validated['work_instructions']
         );
 
         return redirect()->route('admin.monitors.assign')->with('success', 'Modelo e instrucciones asignadas correctamente.');
