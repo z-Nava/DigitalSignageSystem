@@ -3,10 +3,10 @@
 @section('title', 'Asignar Modelo e Instrucción a Monitor')
 
 @section('content')
-<script src="{{ asset('js/assign-content.js') }}"></script>
+
 <div class="max-w-3xl mx-auto bg-white/10 p-8 rounded-xl shadow mb-16">
     <h2 class="text-2xl font-bold mb-6 text-white">Asignación de Contenido</h2>
-
+    <script src="{{ asset('js/assign-content.js') }}"></script>
     <form action="{{ route('admin.monitors.assign') }}" method="POST">
         @csrf
 
