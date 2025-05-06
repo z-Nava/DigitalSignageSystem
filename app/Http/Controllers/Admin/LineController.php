@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLineRequest;
 use Illuminate\Http\Request;
 use App\Models\Line;
 use App\Services\Admin\LineService;
@@ -28,13 +29,8 @@ class LineController extends Controller
         return view('admin.lines.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreLineRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'type' => 'required|string'
-        ]);
-
         $this->lineService->store($request->only('name', 'type'));
 
         return redirect()->route('admin.lines.index')->with('success', 'Línea creada correctamente.');
@@ -47,11 +43,6 @@ class LineController extends Controller
 
     public function update(Request $request, Line $line)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:lines,name,' . $line->id,
-            'type' => 'required|string'
-        ]);
-
         $this->lineService->update($line, $request->only('name', 'type'));
 
         return redirect()->route('admin.lines.index')->with('success', 'Línea actualizada correctamente.');
